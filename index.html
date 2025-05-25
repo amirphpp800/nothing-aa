@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تولیدکننده DNS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        :root {
+            --bg-primary: linear-gradient(135deg, #4B00E0 0%, #7F53FF 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --accent-color: #6B46C1;
+            --success-color: #059669;
+            --danger-color: #dc2626;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: linear-gradient(135deg, #4B00E0 0%, #7F53FF 100%);
+            --bg-card: rgba(17, 24, 39, 0.95);
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --border-color: rgba(75, 85, 99, 0.4);
+            --accent-color: #8B5CF6;
+            --success-color: #10b981;
+            --danger-color: #f87171;
+        }
+        
+        * {
+            font-family: 'Vazirmatn', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .ios-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            margin: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .ios-button {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #0051D5 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 18px 32px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ios-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 122, 255, 0.4);
+        }
+        
+        .ios-button:active {
+            transform: translateY(0);
+            transition: all 0.1s;
+        }
+        
+        .ios-button.generating {
+            background: linear-gradient(135deg, var(--success-color) 0%, #30D158 100%);
+            box-shadow: 0 8px 24px rgba(52, 199, 89, 0.4);
+        }
+
+        .ios-button.danger {
+            background: linear-gradient(135deg, var(--danger-color) 0%, #D70015 100%);
+        }
+        
+        .result-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .result-value {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            color: var(--accent-color);
+            font-weight: 500;
+            background: rgba(10, 132, 255, 0.1);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .country-select, .form-control {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            width: 100%;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .country-select:focus, .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.1);
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+        }
+        
+        .copy-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--danger-color);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(255, 59, 48, 0.3);
+            z-index: 1000;
+        }
+
+        .logout-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(255, 59, 48, 0.4);
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 3rem;
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem;
+        }
+
+        .form-label {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .icon-wrapper {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .ios-card {
+                margin: 0.5rem;
+                padding: 1.5rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .result-value {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .theme-toggle, .logout-btn {
+                width: 45px;
+                height: 45px;
+                top: 15px;
+            }
+            
+            .theme-toggle {
+                left: 15px;
+            }
+            
+            .logout-btn {
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="text-center mb-4">
+                <div class="icon-wrapper mx-auto mb-3" style="width: 60px; height: 60px; background: var(--accent-color); border-radius: 50%; color: white; font-size: 24px;">
+                    <i data-lucide="shield-check"></i>
+                </div>
+                <h2 class="fw-bold" style="color: var(--text-primary);">احراز هویت</h2>
+                <p style="color: var(--text-secondary);">برای ادامه، نام کاربری و رمز عبور را وارد کنید</p>
+            </div>
+            
+            <div class="mb-3">
+                <label for="username" class="form-label">نام کاربری</label>
+                <input type="text" class="form-control" id="username" placeholder="نام کاربری خود را وارد کنید">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">رمز عبور</label>
+                <div class="position-relative">
+                    <input type="password" class="form-control" id="password" placeholder="رمز عبور خود را وارد کنید">
+                    <button type="button" id="togglePassword" class="position-absolute start-0 top-50 translate-middle-y bg-transparent border-0 text-primary" style="margin-left: 10px;">
+                        <i data-lucide="eye"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <button id="loginBtn" class="ios-button">
+                <i data-lucide="log-in"></i>
+                <span class="ms-2">ورود</span>
+            </button>
+
+            <!-- متن راهنمای ورود -->
+            <div class="mt-3 text-center">
+                <p style="color: var(--text-secondary); font-size: 14px;">برای ورود، نام کاربری و رمز عبور را وارد کنید</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+        <!-- Theme Toggle -->
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <i data-lucide="sun" id="themeIcon"></i>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="logout-btn" onclick="logout()">
+            <i data-lucide="log-out" style="color: white;"></i>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center min-vh-100">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <h1 class="title">
+                        <i data-lucide="globe" style="width: 48px; height: 48px; margin-left: 16px;"></i>
+                        تولیدکننده DNS
+                    </h1>
+                    <p class="subtitle">ایجاد آدرس‌های IPv4 و IPv6 اختصاصی</p>
+                    
+                    <div class="ios-card">
+                        <div class="mb-4">
+                            <label class="form-label fs-5 mb-3">
+                                <i data-lucide="map-pin" style="width: 20px; height: 20px; margin-left: 8px;"></i>
+                                انتخاب کشور
+                            </label>
+                            <select id="countrySelect" class="country-select">
+                                <option value="IR">🇮🇷 ایران</option>
+                                <option value="DE">🇩🇪 آلمان</option>
+                                <option value="TR">🇹🇷 ترکیه</option>
+                                <option value="GB">🇬🇧 انگلیس</option>
+                                <option value="AE">🇦🇪 امارات</option>
+                                <option value="CH">🇨🇭 سوییس</option>
+                                <option value="US">🇺🇸 آمریکا</option>
+                                <option value="CA">🇨🇦 کانادا</option>
+                                <option value="BH">🇧🇭 بحرین</option>
+                                <option value="SA">🇸🇦 عربستان</option>
+                                <option value="AL">🇦🇱 آلبانیا</option>
+                                <option value="FI">🇫🇮 فنلاند</option>
+                                <option value="RU">🇷🇺 روسیه</option>
+                                <option value="FR">🇫🇷 فرانسه</option>
+                                <option value="NL">🇳🇱 هلند</option>
+                                <option value="DZ">🇩🇿 الجزایر</option>
+                                <option value="EG">🇪🇬 مصر</option>
+                                <option value="BG">🇧🇬 بلغارستان</option>
+                                <option value="TJ">🇹🇯 تاجیکستان</option>
+                            </select>
+                        </div>
+                        
+                        <button id="generateBtn" class="ios-button">
+                            <div class="loading-spinner"></div>
+                            <span class="button-text">
+                                <i data-lucide="zap" style="width: 20px; height: 20px; margin-left: 8px;"></i>
+                                تولید DNS
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div id="result" class="mt-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://fastly.jsdelivr.net/npm/disable-devtool/disable-devtool.min.js" disable-devtool-auto disable-menu="true" url="https://cia.gov"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // متغیر عمومی برای تشخیص وضعیت احراز هویت
+        let isAuthenticated = false;
+
+        const countries = {
+            IR: 'ایران',
+            DE: 'آلمان',
+            TR: 'ترکیه',
+            GB: 'انگلیس',
+            AE: 'امارات',
+            CH: 'سوییس',
+            US: 'آمریکا',
+            CA: 'کانادا',
+            BH: 'بحرین',
+            SA: 'عربستان',
+            AL: 'آلبانیا',
+            FI: 'فنلاند',
+            RU: 'روسیه',
+            FR: 'فرانسه',
+            NL: 'هلند',
+            DZ: 'الجزایر',
+            EG: 'مصر',
+            BG: 'بلغارستان',
+            TJ: 'تاجیکستان'
+        };
+
+        // Login functionality
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // تعریف اطلاعات ورود به صورت const
+            const USERS = {
+                USER1: 'Empress_team',
+                USER2: 'Empress_Admin',
+                USER3: 'Empress_Pro',
+                USER4: 'test'
+            };
+            
+            const PASSWORDS = {
+                PASS1: 'Empress_team_2024',
+                PASS2: 'Empress_team_Admin',
+                PASS3: 'Empress_team_Pro',
+                PASS4: 'test'
+            };
+            
+            const validCredentials = [
+                { username: USERS.USER1, password: PASSWORDS.PASS1 },
+                { username: USERS.USER2, password: PASSWORDS.PASS2 },
+                { username: USERS.USER3, password: PASSWORDS.PASS3 },
+                { username: USERS.USER4, password: PASSWORDS.PASS4 }
+            ];
+            
+            const isValid = validCredentials.some(cred => 
+                cred.username === username && cred.password === password
+            );
+            
+            if (isValid) {
+                isAuthenticated = true;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                
+                // Animation for main app
+                setTimeout(() => {
+                    const card = document.querySelector('.ios-card');
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, 100);
+            } else {
+                // Show error
+                const passwordInput = document.getElementById('password');
+                const usernameInput = document.getElementById('username');
+                
+                if (!username) {
+                    usernameInput.style.borderColor = 'var(--danger-color)';
+                    usernameInput.style.boxShadow = '0 0 0 4px rgba(255, 59, 48, 0.1)';
+                    setTimeout(() => {
+                        usernameInput.style.borderColor = 'var(--border-color)';
+                        usernameInput.style.boxShadow = 'none';
+                    }, 2000);
+                }
+                
+                const isValidPassword = validCredentials.some(cred => cred.password === password);
+                if (!isValidPassword) {
+                    passwordInput.style.borderColor = 'var(--danger-color)';
+                    passwordInput.style.boxShadow = '0 0 0 4px rgba(255, 59, 48, 0.1)';
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = 'var(--border-color)';
+                        passwordInput.style.boxShadow = 'none';
+                    }, 2000);
+                }
+                
+                showToast('نام کاربری یا رمز عبور اشتباه است!', 'error');
+            }
+        });
+
+        // Enter key for login
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginBtn').click();
+            }
+        });
+        
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                // جایگزینی کامل آیکون به جای تغییر ویژگی
+                this.innerHTML = '<i data-lucide="eye-off"></i>';
+            } else {
+                passwordInput.type = 'password';
+                // جایگزینی کامل آیکون به جای تغییر ویژگی
+                this.innerHTML = '<i data-lucide="eye"></i>';
+            }
+            
+            lucide.createIcons();
+        });
+
+        // Logout functionality
+        function logout() {
+            isAuthenticated = false;
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('password').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Main generation functionality
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            if (!isAuthenticated) return;
+            
+            const selectedCountry = document.getElementById('countrySelect').value;
+            const button = this;
+            const spinner = button.querySelector('.loading-spinner');
+            const buttonText = button.querySelector('.button-text');
+            
+            // Show loading state
+            button.classList.add('generating');
+            spinner.style.display = 'inline-block';
+            buttonText.innerHTML = '<i data-lucide="loader" style="width: 20px; height: 20px; margin-left: 8px; animation: spin 1s linear infinite;"></i>در حال تولید...';
+            button.disabled = true;
+            
+            // Clear previous results
+            document.getElementById('result').innerHTML = '';
+            
+            // انیمیشن 3 ثانیه‌ای بدون شمارش معکوس
+            setTimeout(() => {
+                // Generate DNS addresses
+                const endip = generateRandomIP();
+                const ipv6_1 = generateRandomIPv6(selectedCountry, Object.keys(countries).indexOf(selectedCountry) + 1);
+                const ipv6_2 = incrementIPv6(ipv6_1);
+
+                    const resultHTML = `
+                    <div class="result-card">
+                        <h3 class="fw-bold mb-4 text-center" style="color: var(--text-primary);">
+                            <i data-lucide="check-circle" style="width: 24px; height: 24px; color: var(--success-color); margin-left: 8px;"></i>
+                            نتایج تولید شده
+                        </h3>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="flag" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                کشور
+                            </span>
+                            <span class="result-value">${getCountryFlag(selectedCountry)} ${countries[selectedCountry]}</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="wifi" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                IPv4
+                            </span>
+                            <span class="result-value">
+                                ${endip}
+                                <button class="copy-btn" onclick="copyToClipboard('${endip}')">
+                                    <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="network" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                IPv6 اول
+                            </span>
+                            <span class="result-value">
+                                ${ipv6_1}
+                                <button class="copy-btn" onclick="copyToClipboard('${ipv6_1}')">
+                                    <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="globe-2" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                IPv6 دوم
+                            </span>
+                            <span class="result-value">
+                                ${ipv6_2}
+                                <button class="copy-btn" onclick="copyToClipboard('${ipv6_2}')">
+                                    <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <button class="ios-button" onclick="generateNew()" style="width: auto; padding: 14px 28px;">
+                                <i data-lucide="refresh-cw" style="width: 18px; height: 18px; margin-left: 8px;"></i>
+                                تولید مجدد
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                    document.getElementById('result').innerHTML = resultHTML;
+                lucide.createIcons();
+                
+                // Reset button state
+                spinner.style.display = 'none';
+                buttonText.innerHTML = '<i data-lucide="check" style="width: 20px; height: 20px; margin-left: 8px;"></i>تولید شد!';
+                
+                setTimeout(() => {
+                    button.classList.remove('generating');
+                    buttonText.innerHTML = '<i data-lucide="zap" style="width: 20px; height: 20px; margin-left: 8px;"></i>تولید DNS';
+                    button.disabled = false;
+                    lucide.createIcons();
+                }, 1500);
+            }, 3000);
+        });
+
+        function generateNew() {
+            if (!isAuthenticated) return;
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('generateBtn').click();
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('کپی شد!', 'success');
+            }).catch(() => {
+                showToast('خطا در کپی کردن!', 'error');
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed top-0 start-50 translate-middle-x mt-3';
+            toast.style.zIndex = '9999';
+            
+            const bgColor = type === 'success' ? 'var(--success-color)' : 'var(--danger-color)';
+            const icon = type === 'success' ? 'check-circle' : 'x-circle';
+            
+            toast.innerHTML = `
+                <div class="alert fade show" role="alert" style="background: ${bgColor}; color: white; border: none; border-radius: 12px; padding: 12px 20px; display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="${icon}" style="width: 18px; height: 18px;"></i>
+                    ${message}
+                </div>
+            `;
+            document.body.appendChild(toast);
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Utility functions (from your original code)
+        function generateRandomIP() {
+            return `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+        }
+
+        function generateRandomIPv6(countryCode, index) {
+            const chars = '0123456789abcdef';
+            let ipv6 = `${countryCode.toLowerCase()}${index.toString().padStart(2, '0')}:`;
+            for (let i = 0; i < 7; i++) {
+                ipv6 += (i ? ':' : '') + Array(4).fill().map(() => chars[Math.floor(Math.random() * chars.length)]).join('');
+            }
+            return ipv6;
+        }
+
+        function incrementIPv6(ipv6) {
+            const parts = ipv6.split(':');
+            const lastPart = parts.pop();
+            const incrementedLastPart = (parseInt(lastPart, 16) + 1).toString(16).padStart(4, '0');
+            parts.push(incrementedLastPart);
+            return parts.join(':');
+        }
+        
+        // تابع نمایش پرچم کشورها
+        function getCountryFlag(countryCode) {
+            const flagEmojis = {
+                'IR': '🇮🇷',
+                'DE': '🇩🇪',
+                'TR': '🇹🇷',
+                'GB': '🇬🇧',
+                'AE': '🇦🇪',
+                'CH': '🇨🇭',
+                'US': '🇺🇸',
+                'CA': '🇨🇦',
+                'BH': '🇧🇭',
+                'SA': '🇸🇦',
+                'AL': '🇦🇱',
+                'FI': '🇫🇮',
+                'RU': '🇷🇺',
+                'FR': '🇫🇷',
+                'NL': '🇳🇱',
+                'DZ': '🇩🇿',
+                'EG': '🇪🇬',
+                'BG': '🇧🇬',
+                'TJ': '🇹🇯'
+            };
+            
+            return flagEmojis[countryCode] || '';
+        }
+
+        // Initialize icons on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
