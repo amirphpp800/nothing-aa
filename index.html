@@ -343,21 +343,25 @@
             right: 80px;
             background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
             border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 24px rgba(0, 136, 204, 0.3);
             z-index: 1000;
+            white-space: nowrap;
         }
 
         .telegram-btn:hover {
-            transform: scale(1.1);
+            transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(0, 136, 204, 0.4);
         }
 
@@ -639,7 +643,7 @@
                 min-width: auto;
             }
 
-            .theme-toggle, .telegram-btn, .logout-btn {
+            .theme-toggle, .logout-btn {
                 width: 45px;
                 height: 45px;
                 top: 15px;
@@ -651,6 +655,9 @@
             
             .telegram-btn {
                 right: 70px;
+                top: 15px;
+                padding: 8px 12px;
+                font-size: 12px;
             }
             
             .logout-btn {
@@ -756,6 +763,7 @@
         <!-- Telegram Button -->
         <div class="telegram-btn" onclick="openTelegramChannel()" title="ورود به کانال تلگرام Empress_team">
             <i data-lucide="send" style="color: white;"></i>
+            <span>ورود به کانال تلگرام</span>
         </div>
 
         <!-- Logout Button -->
@@ -768,9 +776,9 @@
                 <div class="col-12 col-md-10 col-lg-8 col-xl-6">
                     <h1 class="title">
                         <i data-lucide="globe" style="width: 48px; height: 48px; margin-left: 16px;"></i>
-                        Empress_team - ابزارهای شبکه
+                        Empress_team - اختصاصی
                     </h1>
-                    <p class="subtitle">ایجاد آدرس‌های DNS، تست پینگ و تنظیمات WireGuard | طراحی و توسعه: Empress_team</p>
+                    <p class="subtitle">ایجاد آدرس‌های DNS، تست پینگ و کانفیگ WireGuard | طراحی و توسعه: Empress_team</p>
                     
                     <div class="ios-card">
                         <!-- Navigation Tabs -->
