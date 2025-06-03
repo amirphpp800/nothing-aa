@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تولیدکننده DNS پیشرفته</title>
+    <title>تولیدکننده DNS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
@@ -18,35 +18,31 @@
             --accent-color: #6B46C1;
             --success-color: #059669;
             --danger-color: #dc2626;
-            --warning-color: #d97706;
-            --info-color: #0891b2;
         }
 
         [data-theme="dark"] {
-            --bg-primary: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            --bg-card: rgba(17, 24, 39, 0.98);
+            --bg-primary: linear-gradient(135deg, #4B00E0 0%, #7F53FF 100%);
+            --bg-card: rgba(17, 24, 39, 0.95);
             --text-primary: #f9fafb;
             --text-secondary: #d1d5db;
-            --border-color: rgba(75, 85, 99, 0.6);
+            --border-color: rgba(75, 85, 99, 0.4);
             --accent-color: #8B5CF6;
             --success-color: #10b981;
             --danger-color: #f87171;
-            --warning-color: #f59e0b;
-            --info-color: #06b6d4;
         }
-
+        
         * {
             font-family: 'Vazirmatn', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-
+        
         body {
             background: var(--bg-primary);
             min-height: 100vh;
             padding: 0;
             margin: 0;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
         }
-
+        
         .ios-card {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -55,22 +51,9 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             padding: 2rem;
             margin: 1rem;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
         }
-
-        .ios-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-color), var(--info-color));
-            opacity: 0.8;
-        }
-
+        
         .ios-button {
             background: linear-gradient(135deg, var(--accent-color) 0%, #0051D5 100%);
             border: none;
@@ -85,36 +68,26 @@
             position: relative;
             overflow: hidden;
         }
-
+        
         .ios-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(0, 122, 255, 0.4);
         }
-
+        
         .ios-button:active {
             transform: translateY(0);
             transition: all 0.1s;
         }
-
+        
         .ios-button.generating {
             background: linear-gradient(135deg, var(--success-color) 0%, #30D158 100%);
             box-shadow: 0 8px 24px rgba(52, 199, 89, 0.4);
         }
 
-        .ios-button.testing {
-            background: linear-gradient(135deg, var(--warning-color) 0%, #FF9500 100%);
-            box-shadow: 0 8px 24px rgba(255, 149, 0, 0.4);
-        }
-
         .ios-button.danger {
             background: linear-gradient(135deg, var(--danger-color) 0%, #D70015 100%);
         }
-
-        .ios-button.secondary {
-            background: linear-gradient(135deg, var(--info-color) 0%, #32D0E5 100%);
-            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
-        }
-
+        
         .result-card {
             background: var(--bg-card);
             border-radius: 20px;
@@ -124,72 +97,28 @@
             backdrop-filter: blur(10px);
             opacity: 0;
             transform: translateY(20px);
-            animation: slideUp 0.6s ease-out forwards;
-            position: relative;
-            overflow: hidden;
+            animation: slideUp 0.5s ease-out forwards;
         }
-
-        .result-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--success-color), var(--accent-color), var(--info-color));
-        }
-
+        
         @keyframes slideUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        @keyframes progress {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-color), var(--info-color));
-            z-index: 9999;
-            animation: progress 3s ease-out;
-        }
-
+        
         .result-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 16px 0;
             border-bottom: 1px solid rgba(128, 128, 128, 0.1);
-            transition: all 0.3s ease;
         }
-
-        .result-item:hover {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 12px;
-            padding: 16px 12px;
-            margin: 0 -12px;
-        }
-
-        [data-theme="dark"] .result-item:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
+        
         .result-item:last-child {
             border-bottom: none;
         }
-
+        
         .result-label {
             font-weight: 600;
             color: var(--text-primary);
@@ -198,7 +127,7 @@
             align-items: center;
             gap: 12px;
         }
-
+        
         .result-value {
             font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
             color: var(--accent-color);
@@ -210,14 +139,8 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: all 0.3s ease;
         }
-
-        .result-value:hover {
-            background: rgba(10, 132, 255, 0.15);
-            transform: scale(1.02);
-        }
-
+        
         .country-select, .form-control {
             background: var(--bg-card);
             border: 2px solid var(--border-color);
@@ -230,7 +153,7 @@
             margin-bottom: 2rem;
             transition: all 0.3s ease;
         }
-
+        
         .country-select:focus, .form-control:focus {
             outline: none;
             border-color: var(--accent-color);
@@ -238,7 +161,7 @@
             background: var(--bg-card);
             color: var(--text-primary);
         }
-
+        
         .title {
             font-size: 2.5rem;
             font-weight: 700;
@@ -246,38 +169,31 @@
             text-align: center;
             margin-bottom: 3rem;
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            animation: titleGlow 2s ease-in-out infinite alternate;
         }
-
-        @keyframes titleGlow {
-            from { text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
-            to { text-shadow: 0 4px 20px rgba(123, 83, 255, 0.4); }
-        }
-
+        
         .subtitle {
             color: rgba(255, 255, 255, 0.8);
             text-align: center;
             font-size: 1.2rem;
             margin-bottom: 2rem;
         }
-
+        
         .loading-spinner {
             display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid white;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-right: 8px;
-            flex-shrink: 0;
+            margin-right: 10px;
         }
-
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
+        
         .copy-btn {
             background: transparent;
             border: 1px solid var(--accent-color);
@@ -292,11 +208,10 @@
             min-width: 40px;
             height: 40px;
         }
-
+        
         .copy-btn:hover {
             background: var(--accent-color);
             color: white;
-            transform: scale(1.1);
         }
 
         .theme-toggle {
@@ -319,7 +234,7 @@
         }
 
         .theme-toggle:hover {
-            transform: scale(1.1) rotate(360deg);
+            transform: scale(1.1);
         }
 
         .logout-btn {
@@ -378,371 +293,40 @@
             align-items: center;
             justify-content: center;
         }
-
-        .ping-result {
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin: 8px 0;
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
-            font-size: 14px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .ping-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .ping-error {
-            background: rgba(248, 113, 113, 0.1);
-            color: var(--danger-color);
-            border: 1px solid rgba(248, 113, 113, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .country-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(10, 132, 255, 0.1);
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin: 8px 0;
-        }
-
-        .country-flag {
-            font-size: 24px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-5px); }
-            60% { transform: translateY(-3px); }
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .feature-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 1rem;
-        }
-
-        .tab-button {
-            background: transparent;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            flex: 1;
-        }
-
-        .tab-button.active {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        /* بهبود ریسپانسیو برای موبایل */
-        @media (max-width: 992px) {
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 0.75rem;
-            }
-
-            .feature-tabs {
-                overflow-x: auto;
-                white-space: nowrap;
-                padding-bottom: 8px;
-            }
-
-            .tab-button {
-                flex-shrink: 0;
-                min-width: 120px;
-            }
-        }
-
+        
         @media (max-width: 768px) {
-            .container-fluid {
-                padding: 0 10px;
-            }
-
             .ios-card {
-                margin: 0.5rem 0;
-                padding: 1.25rem;
-                border-radius: 20px;
-            }
-
-            .title {
-                font-size: 1.8rem;
-                margin-bottom: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .result-item {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-                padding: 12px 0;
-            }
-
-            .result-label {
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-
-            .result-value {
-                width: 100%;
-                justify-content: space-between;
-                padding: 12px 14px;
-                font-size: 13px;
-                overflow-wrap: break-word;
-                word-break: break-all;
-            }
-
-            .theme-toggle, .logout-btn {
-                width: 42px;
-                height: 42px;
-                top: 12px;
-            }
-
-            .theme-toggle {
-                left: 12px;
-            }
-
-            .logout-btn {
-                right: 12px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-                margin: 1.5rem 0;
-            }
-
-            .stat-card {
-                padding: 1.25rem;
-            }
-
-            .stat-number {
-                font-size: 1.75rem;
-            }
-
-            .feature-tabs {
-                flex-direction: column;
-                gap: 0.5rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .tab-button {
-                padding: 14px 20px;
-                text-align: center;
-                border-radius: 12px;
-                border: 1px solid var(--border-color);
-            }
-
-            .ios-button {
-                padding: 16px 24px;
-                font-size: 16px;
-            }
-
-            .country-select, .form-control {
-                padding: 14px 16px;
-                font-size: 16px;
-                margin-bottom: 1.5rem;
-            }
-
-            .form-label {
-                font-size: 16px;
-                margin-bottom: 10px;
-            }
-
-            .country-info {
-                padding: 10px 14px;
-                justify-content: center;
-            }
-
-            .country-flag {
-                font-size: 20px;
-            }
-
-            .copy-btn {
-                min-width: 36px;
-                height: 36px;
-                padding: 6px 10px;
-                flex-shrink: 0;
-            }
-
-            .ping-result {
-                padding: 10px 12px;
-                font-size: 13px;
-                margin: 6px 0;
-            }
-
-            .login-card {
-                margin: 1rem;
-                padding: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .title {
-                font-size: 1.6rem;
-                line-height: 1.3;
-            }
-
-            .subtitle {
-                font-size: 0.9rem;
-            }
-
-            .ios-card {
-                margin: 0.25rem 0;
-                padding: 1rem;
-                border-radius: 16px;
-            }
-
-            .result-value {
-                padding: 10px 12px;
-                font-size: 12px;
-            }
-
-            .ios-button {
-                padding: 14px 20px;
-                font-size: 15px;
-            }
-
-            .country-select, .form-control {
-                padding: 12px 14px;
-                font-size: 15px;
-            }
-
-            .stat-card {
-                padding: 1rem;
-            }
-
-            .stat-number {
-                font-size: 1.5rem;
-            }
-
-            .copy-btn {
-                min-width: 32px;
-                height: 32px;
-                padding: 4px 8px;
-            }
-
-            .theme-toggle, .logout-btn {
-                width: 38px;
-                height: 38px;
-                top: 10px;
-            }
-
-            .theme-toggle {
-                left: 10px;
-            }
-
-            .logout-btn {
-                right: 10px;
-            }
-
-            .login-card {
                 margin: 0.5rem;
                 padding: 1.5rem;
             }
-        }
-
-        /* بهبود تجربه کاربری */
-        .result-item:hover {
-            background: rgba(0, 0, 0, 0.01);
-            border-radius: 8px;
-            padding: 12px 8px;
-            margin: 0 -8px;
-        }
-
-        [data-theme="dark"] .result-item:hover {
-            background: rgba(255, 255, 255, 0.01);
-        }
-
-        .ios-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .form-control:focus, .country-select:focus {
-            transform: scale(1.01);
-        }
-
-        .tab-button:hover {
-            background: rgba(107, 70, 193, 0.1);
-            color: var(--accent-color);
-        }
-
-        @media (hover: none) {
-            .ios-button:hover {
-                transform: none;
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .result-value {
+                width: 100%;
+                justify-content: center;
             }
 
-            .result-item:hover {
-                background: transparent;
-                padding: 16px 0;
-                margin: 0;
+            .theme-toggle, .logout-btn {
+                width: 45px;
+                height: 45px;
+                top: 15px;
             }
-
-            .copy-btn:hover {
-                transform: none;
+            
+            .theme-toggle {
+                left: 15px;
+            }
+            
+            .logout-btn {
+                right: 15px;
             }
         }
     </style>
@@ -758,7 +342,7 @@
                 <h2 class="fw-bold" style="color: var(--text-primary);">احراز هویت</h2>
                 <p style="color: var(--text-secondary);">برای ادامه، نام کاربری و رمز عبور را وارد کنید</p>
             </div>
-
+            
             <div class="mb-3">
                 <label for="username" class="form-label">نام کاربری</label>
                 <input type="text" class="form-control" id="username" placeholder="نام کاربری خود را وارد کنید">
@@ -773,12 +357,13 @@
                     </button>
                 </div>
             </div>
-
+            
             <button id="loginBtn" class="ios-button">
                 <i data-lucide="log-in"></i>
                 <span class="ms-2">ورود</span>
             </button>
 
+            <!-- متن راهنمای ورود -->
             <div class="mt-3 text-center">
                 <p style="color: var(--text-secondary); font-size: 14px;">برای ورود، نام کاربری و رمز عبور را وارد کنید</p>
             </div>
@@ -799,167 +384,77 @@
 
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center min-vh-100">
-                <div class="col-12 col-md-10 col-lg-8">
+                <div class="col-12 col-md-8 col-lg-6">
                     <h1 class="title">
                         <i data-lucide="globe" style="width: 48px; height: 48px; margin-left: 16px;"></i>
-                        تولیدکننده DNS پیشرفته
+                        تولیدکننده DNS
                     </h1>
-                    <p class="subtitle">ایجاد آدرس‌های IPv4 و IPv6 اختصاصی با امکانات پیشرفته</p>
-
-
-
-                    <!-- Feature Tabs -->
+                    <p class="subtitle">ایجاد آدرس‌های IPv4 و IPv6 اختصاصی</p>
+                    
                     <div class="ios-card">
-                        <div class="feature-tabs">
-                            <button class="tab-button active" onclick="switchTab('generate')">
-                                <i data-lucide="zap" style="width: 16px; height: 16px; margin-left: 8px;"></i>
+                        <div class="mb-4">
+                            <label class="form-label fs-5 mb-3">
+                                <i data-lucide="map-pin" style="width: 20px; height: 20px; margin-left: 8px;"></i>
+                                انتخاب کشور
+                            </label>
+                            <select id="countrySelect" class="country-select">
+                                <option value="IR">🇮🇷 ایران</option>
+                                <option value="DE">🇩🇪 آلمان</option>
+                                <option value="TR">🇹🇷 ترکیه</option>
+                                <option value="GB">🇬🇧 انگلیس</option>
+                                <option value="AE">🇦🇪 امارات</option>
+                                <option value="CH">🇨🇭 سوییس</option>
+                                <option value="US">🇺🇸 آمریکا</option>
+                                <option value="CA">🇨🇦 کانادا</option>
+                                <option value="BH">🇧🇭 بحرین</option>
+                                <option value="SA">🇸🇦 عربستان</option>
+                                <option value="AL">🇦🇱 آلبانیا</option>
+                                <option value="FI">🇫🇮 فنلاند</option>
+                                <option value="RU">🇷🇺 روسیه</option>
+                                <option value="FR">🇫🇷 فرانسه</option>
+                                <option value="NL">🇳🇱 هلند</option>
+                                <option value="DZ">🇩🇿 الجزایر</option>
+                                <option value="EG">🇪🇬 مصر</option>
+                                <option value="BG">🇧🇬 بلغارستان</option>
+                                <option value="TJ">🇹🇯 تاجیکستان</option>
+                            </select>
+                        </div>
+                        
+                        <button id="generateBtn" class="ios-button">
+                            <div class="loading-spinner"></div>
+                            <span class="button-text">
+                                <i data-lucide="zap" style="width: 20px; height: 20px; margin-left: 8px;"></i>
                                 تولید DNS
-                            </button>
-                            <button class="tab-button" onclick="switchTab('test')">
-                                <i data-lucide="activity" style="width: 16px; height: 16px; margin-left: 8px;"></i>
-                                تست پینگ
-                            </button>
-                            <button class="tab-button" onclick="switchTab('tools')">
-                                <i data-lucide="settings" style="width: 16px; height: 16px; margin-left: 8px;"></i>
-                                ابزارها
-                            </button>
-                        </div>
-
-                        <!-- Generate Tab -->
-                        <div id="generateTab" class="tab-content active">
-                            <div class="mb-4">
-                                <label class="form-label fs-5 mb-3">
-                                    <i data-lucide="map-pin" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                    انتخاب کشور
-                                </label>
-                                <select id="countrySelect" class="country-select">
-                                    <option value="IR">🇮🇷 ایران</option>
-                                    <option value="DE">🇩🇪 آلمان</option>
-                                    <option value="TR">🇹🇷 ترکیه</option>
-                                    <option value="GB">🇬🇧 انگلیس</option>
-                                    <option value="AE">🇦🇪 امارات متحده عربی</option>
-                                    <option value="CH">🇨🇭 سوییس</option>
-                                    <option value="US">🇺🇸 ایالات متحده آمریکا</option>
-                                    <option value="CA">🇨🇦 کانادا</option>
-                                    <option value="BH">🇧🇭 بحرین</option>
-                                    <option value="SA">🇸🇦 عربستان سعودی</option>
-                                    <option value="AL">🇦🇱 آلبانیا</option>
-                                    <option value="FI">🇫🇮 فنلاند</option>
-                                    <option value="RU">🇷🇺 روسیه</option>
-                                    <option value="FR">🇫🇷 فرانسه</option>
-                                    <option value="NL">🇳🇱 هلند</option>
-                                    <option value="DZ">🇩🇿 الجزایر</option>
-                                    <option value="EG">🇪🇬 مصر</option>
-                                    <option value="BG">🇧🇬 بلغارستان</option>
-                                    <option value="TJ">🇹🇯 تاجیکستان</option>
-                                    <option value="JP">🇯🇵 ژاپن</option>
-                                    <option value="KR">🇰🇷 کره جنوبی</option>
-                                    <option value="SG">🇸🇬 سنگاپور</option>
-                                    <option value="AU">🇦🇺 استرالیا</option>
-                                    <option value="BR">🇧🇷 برزیل</option>
-                                </select>
-                            </div>
-
-                            <button id="generateBtn" class="ios-button">
-                                <div class="loading-spinner"></div>
-                                <span class="button-text">
-                                    <i data-lucide="zap" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                    تولید DNS
-                                </span>
-                            </button>
-                        </div>
-
-                        <!-- Test Tab -->
-                        <div id="testTab" class="tab-content">
-                            <div class="mb-4">
-                                <label class="form-label fs-5 mb-3">
-                                                                   <i data-lucide="activity" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                    آدرس IPv4 برای تست پینگ
-                                </label>
-                                <input type="text" id="pingInput" class="form-control" placeholder="مثال: 8.8.8.8" />
-                            </div>
-
-                            <button id="pingBtn" class="ios-button testing">
-                                <div class="loading-spinner"></div>
-                                <span class="button-text">
-                                    <i data-lucide="activity" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                    شروع تست پینگ
-                                </span>
-                            </button>
-
-                            <div id="pingResults" class="mt-4"></div>
-                        </div>
-
-                        <!-- Tools Tab -->
-                        <div id="toolsTab" class="tab-content">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <button class="ios-button secondary" onclick="exportResults()">
-                                        <i data-lucide="download" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                        دانلود نتایج
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="ios-button secondary" onclick="clearHistory()">
-                                        <i data-lucide="trash-2" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                        پاک کردن تاریخچه
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="ios-button secondary" onclick="randomCountry()">
-                                        <i data-lucide="shuffle" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                        کشور تصادفی
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="ios-button secondary" onclick="bulkGenerate()">
-                                        <i data-lucide="layers" style="width: 20px; height: 20px; margin-left: 8px;"></i>
-                                        تولید دسته‌ای
-                                    </button>
-                                </div>
-                                 <div class="col-md-6">
-                                    <label for="bulkCount" class="form-label fs-5 mb-3">
-                                    تعداد تولید:
-                                     </label>
-                                        <input type="number" id="bulkCount" class="form-control" placeholder="تعداد" value="5" min="1" max="10">
-                                    </div>
-                            </div>
-                        </div>
+                            </span>
+                        </button>
                     </div>
-
+                    
                     <div id="result" class="mt-4"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- <script src="https://fastly.jsdelivr.net/npm/disable-devtool/disable-devtool.min.js" disable-devtool-auto disable-menu="true" url="https://cia.gov"></script> -->
+    <script src="https://fastly.jsdelivr.net/npm/disable-devtool/disable-devtool.min.js" disable-devtool-auto disable-menu="true" url="https://cia.gov"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // Global variables
+        // متغیر عمومی برای تشخیص وضعیت احراز هویت
         let isAuthenticated = false;
-        let currentTab = 'generate';
-        let stats = {
-            totalGenerated: 0,
-            successfulPings: 0,
-            countriesUsed: new Set(),
-            generatedIPs: []
-        };
 
         const countries = {
             IR: 'ایران',
             DE: 'آلمان',
             TR: 'ترکیه',
             GB: 'انگلیس',
-            AE: 'امارات متحده عربی',
+            AE: 'امارات',
             CH: 'سوییس',
-            US: 'ایالات متحده آمریکا',
+            US: 'آمریکا',
             CA: 'کانادا',
             BH: 'بحرین',
-            SA: 'عربستان سعودی',
+            SA: 'عربستان',
             AL: 'آلبانیا',
             FI: 'فنلاند',
             RU: 'روسیه',
@@ -968,76 +463,60 @@
             DZ: 'الجزایر',
             EG: 'مصر',
             BG: 'بلغارستان',
-            TJ: 'تاجیکستان',
-            JP: 'ژاپن',
-            KR: 'کره جنوبی',
-            SG: 'سنگاپور',
-            AU: 'استرالیا',
-            BR: 'برزیل'
+            TJ: 'تاجیکستان'
         };
-
-        // Tab switching
-        function switchTab(tabName) {
-            currentTab = tabName;
-
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            // Add active class to current tab
-            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
-            document.getElementById(`${tabName}Tab`).classList.add('active');
-        }
 
         // Login functionality
         document.getElementById('loginBtn').addEventListener('click', function() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
+            
+            // تعریف اطلاعات ورود به صورت const
             const USERS = {
                 USER1: 'Empress_team',
                 USER2: 'Empress_Admin',
                 USER3: 'Empress_Pro',
             };
-
+            
             const PASSWORDS = {
                 PASS1: 'Empress_team_2024',
                 PASS2: 'Empress_team_Admin',
                 PASS3: 'Empress_team_Pro',
             };
-
+            
             const validCredentials = [
                 { username: USERS.USER1, password: PASSWORDS.PASS1 },
                 { username: USERS.USER2, password: PASSWORDS.PASS2 },
-                { username: USERS.USER3, password: PASSWORDS.PASS3 }
+                { username: USERS.USER3, password: PASSWORDS.PASS3 },
+                { username: USERS.USER4, password: PASSWORDS.PASS4 }
             ];
-
+            
             const isValid = validCredentials.some(cred => 
                 cred.username === username && cred.password === password
             );
-
+            
             if (isValid) {
                 isAuthenticated = true;
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
-
+                
+                // Animation for main app
                 setTimeout(() => {
                     const card = document.querySelector('.ios-card');
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(30px)';
-
+                    
                     setTimeout(() => {
                         card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
                     }, 100);
                 }, 100);
-
-                loadStats();
             } else {
+                // Show error
                 const passwordInput = document.getElementById('password');
                 const usernameInput = document.getElementById('username');
-
+                
                 if (!username) {
                     usernameInput.style.borderColor = 'var(--danger-color)';
                     usernameInput.style.boxShadow = '0 0 0 4px rgba(255, 59, 48, 0.1)';
@@ -1046,7 +525,7 @@
                         usernameInput.style.boxShadow = 'none';
                     }, 2000);
                 }
-
+                
                 const isValidPassword = validCredentials.some(cred => cred.password === password);
                 if (!isValidPassword) {
                     passwordInput.style.borderColor = 'var(--danger-color)';
@@ -1056,7 +535,7 @@
                         passwordInput.style.boxShadow = 'none';
                     }, 2000);
                 }
-
+                
                 showToast('نام کاربری یا رمز عبور اشتباه است!', 'error');
             }
         });
@@ -1067,19 +546,22 @@
                 document.getElementById('loginBtn').click();
             }
         });
-
+        
         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
-
+            const icon = this.querySelector('i');
+            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
+                // جایگزینی کامل آیکون به جای تغییر ویژگی
                 this.innerHTML = '<i data-lucide="eye-off"></i>';
             } else {
                 passwordInput.type = 'password';
+                // جایگزینی کامل آیکون به جای تغییر ویژگی
                 this.innerHTML = '<i data-lucide="eye"></i>';
             }
-
+            
             lucide.createIcons();
         });
 
@@ -1092,12 +574,12 @@
             document.getElementById('result').innerHTML = '';
         }
 
-        // Theme toggle with enhanced animation
+        // Theme toggle
         function toggleTheme() {
             const body = document.body;
             const themeIcon = document.getElementById('themeIcon');
             const currentTheme = body.getAttribute('data-theme');
-
+            
             if (currentTheme === 'light') {
                 body.setAttribute('data-theme', 'dark');
                 themeIcon.setAttribute('data-lucide', 'moon');
@@ -1105,108 +587,113 @@
                 body.setAttribute('data-theme', 'light');
                 themeIcon.setAttribute('data-lucide', 'sun');
             }
-
+            
             lucide.createIcons();
         }
 
-        // Enhanced progress bar
-        function showProgressBar() {
-            const progressBar = document.createElement('div');
-            progressBar.className = 'progress-bar';
-            document.body.appendChild(progressBar);
-
-            setTimeout(() => {
-                progressBar.remove();
-            }, 3000);
-        }
-
-        // Main generation functionality with enhanced animations
+        // Main generation functionality
         document.getElementById('generateBtn').addEventListener('click', function() {
             if (!isAuthenticated) return;
-
+            
             const selectedCountry = document.getElementById('countrySelect').value;
             const button = this;
             const spinner = button.querySelector('.loading-spinner');
             const buttonText = button.querySelector('.button-text');
-
-            // Show progress bar
-            showProgressBar();
-
+            
             // Show loading state
             button.classList.add('generating');
             spinner.style.display = 'inline-block';
             buttonText.innerHTML = '<i data-lucide="loader" style="width: 20px; height: 20px; margin-left: 8px; animation: spin 1s linear infinite;"></i>در حال تولید...';
             button.disabled = true;
-
+            
+            // Clear previous results
+            document.getElementById('result').innerHTML = '';
+            
+            // انیمیشن 3 ثانیه‌ای بدون شمارش معکوس
             setTimeout(() => {
                 // Generate DNS addresses
                 const endip = generateRandomIP();
                 const ipv6_1 = generateRandomIPv6(selectedCountry, Object.keys(countries).indexOf(selectedCountry) + 1);
                 const ipv6_2 = incrementIPv6(ipv6_1);
 
-                // Update stats
-                stats.totalGenerated++;
-                stats.countriesUsed.add(selectedCountry);
-                stats.generatedIPs.push({
-                    country: selectedCountry,
-                    ipv4: endip,
-                    ipv6_1: ipv6_1,
-                    ipv6_2: ipv6_2,
-                    timestamp: new Date().toISOString()
-                });
-
-                saveStats();
-
-                // Display results and ensure they stay visible
-                const resultHTML = createResultHTML(selectedCountry, endip, ipv6_1, ipv6_2, null);
-                const resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = resultHTML;
-                resultDiv.style.display = 'block';
-                resultDiv.style.opacity = '1';
-
-                // Ensure icons are rendered
-                lucide.createIcons();
-
-                // Ensure result stays visible after icons render
-                setTimeout(() => {
-                    ensureResultVisibility();
-                }, 100);
-
-                // Try to get country info without replacing the whole result
-                getCountryInfo(endip).then(countryInfo => {
-                    if (countryInfo && countryInfo.country_name) {
-                        // Only update the country info section
-                        const currentResultDiv = document.getElementById('result');
-                        const countryInfoPlaceholder = currentResultDiv ? currentResultDiv.querySelector('.country-info-placeholder') : null;
-                        if (countryInfoPlaceholder) {
-                            countryInfoPlaceholder.innerHTML = `
-                                <div class="result-item">
-                                    <span class="result-label">
-                                        <div class="icon-wrapper">
-                                            <i data-lucide="map" style="width: 20px; height: 20px;"></i>
-                                        </div>
-                                        کشور واقعی IP
-                                    </span>
-                                    <div class="country-info">
-                                        <span class="country-flag">${getCountryFlag(countryInfo.country_code2) || '🌍'}</span>
-                                        <span>${countryInfo.country_name}</span>
-                                        ${countryInfo.city ? `<span style="color: var(--text-secondary);">- ${countryInfo.city}</span>` : ''}
-                                    </div>
+                    const resultHTML = `
+                    <div class="result-card">
+                        <h3 class="fw-bold mb-4 text-center" style="color: var(--text-primary);">
+                            <i data-lucide="check-circle" style="width: 24px; height: 24px; color: var(--success-color); margin-left: 8px;"></i>
+                            نتایج تولید شده
+                        </h3>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="flag" style="width: 20px; height: 20px;"></i>
                                 </div>
-                            `;
-                            lucide.createIcons();
-                            ensureResultVisibility();
-                        }
-                    }
-                }).catch(error => {
-                    console.log('Country API failed, keeping basic results');
-                    ensureResultVisibility();
-                });
+                                کشور
+                            </span>
+                            <span class="result-value">${getCountryFlag(selectedCountry)} ${countries[selectedCountry]}</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="wifi" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                IPv4
+                            </span>
+                            <span class="result-value">
+                                ${endip}
+                                <button class="copy-btn" onclick="copyToClipboard('${endip}')">
+                                    <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="network" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                IPv6 اول
+                            </span>
+                            <span class="result-value">
+                                ${ipv6_1}
+                                <button class="copy-btn" onclick="copyToClipboard('${ipv6_1}')">
+                                    <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="globe-2" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                IPv6 دوم
+                            </span>
+                            <span class="result-value">
+                                ${ipv6_2}
+                                <button class="copy-btn" onclick="copyToClipboard('${ipv6_2}')">
+                                    <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <button class="ios-button" onclick="generateNew()" style="width: auto; padding: 14px 28px;">
+                                <i data-lucide="refresh-cw" style="width: 18px; height: 18px; margin-left: 8px;"></i>
+                                تولید مجدد
+                            </button>
+                        </div>
+                    </div>
+                `;
 
+                    document.getElementById('result').innerHTML = resultHTML;
+                lucide.createIcons();
+                
                 // Reset button state
                 spinner.style.display = 'none';
                 buttonText.innerHTML = '<i data-lucide="check" style="width: 20px; height: 20px; margin-left: 8px;"></i>تولید شد!';
-
+                
                 setTimeout(() => {
                     button.classList.remove('generating');
                     buttonText.innerHTML = '<i data-lucide="zap" style="width: 20px; height: 20px; margin-left: 8px;"></i>تولید DNS';
@@ -1216,360 +703,43 @@
             }, 3000);
         });
 
-        // Ping test functionality
-        document.getElementById('pingBtn').addEventListener('click', function() {
-            if (!isAuthenticated) return;
-
-            const ip = document.getElementById('pingInput').value.trim();
-            if (!ip) {
-                showToast('لطفاً آدرس IP را وارد کنید!', 'error');
-                return;
-            }
-
-            if (!isValidIP(ip)) {
-                showToast('آدرس IP نامعتبر است!', 'error');
-                return;
-            }
-
-            const button = this;
-            const spinner = button.querySelector('.loading-spinner');
-            const buttonText = button.querySelector('.button-text');
-
-            button.classList.add('testing');
-            spinner.style.display = 'inline-block';
-            buttonText.innerHTML = '<i data-lucide="loader" style="width: 20px; height: 20px; margin-left: 8px; animation: spin 1s linear infinite;"></i>در حال تست...';
-            button.disabled = true;
-
-            simulatePingTest(ip);
-
-            setTimeout(() => {
-                spinner.style.display = 'none';
-                buttonText.innerHTML = '<i data-lucide="check" style="width: 20px; height: 20px; margin-left: 8px;"></i>تست تکمیل شد!';
-
-                setTimeout(() => {
-                    button.classList.remove('testing');
-                    buttonText.innerHTML = '<i data-lucide="activity" style="width: 20px; height: 20px; margin-left: 8px;"></i>شروع تست پینگ';
-                    button.disabled = false;
-                    lucide.createIcons();
-                }, 1500);
-            }, 3000);
-        });
-
-        // Simulate ping test (since we can't actually ping from browser)
-        function simulatePingTest(ip) {
-            const resultsContainer = document.getElementById('pingResults');
-            resultsContainer.innerHTML = '<h5 style="color: var(--text-primary); margin-bottom: 1rem;">نتایج تست پینگ:</h5>';
-
-            let delay = 0;
-            for (let i = 1; i <= 5; i++) {
-                setTimeout(() => {
-                    const time = Math.floor(Math.random() * 100) + 10;
-                    const success = Math.random() > 0.1; // 90% success rate
-
-                    const resultDiv = document.createElement('div');
-                    resultDiv.className = `ping-result ${success ? 'ping-success' : 'ping-error'}`;
-
-                    if (success) {
-                        resultDiv.innerHTML = `پینگ ${i}: ${ip} - زمان: ${time}ms ✓`;
-                        stats.successfulPings++;
-                    } else {
-                        resultDiv.innerHTML = `پینگ ${i}: ${ip} - درخواست ناموفق ✗`;
-                    }
-
-                    resultsContainer.appendChild(resultDiv);
-                    saveStats();
-                }, delay);
-                delay += 600;
-            }
-        }
-
-        // Validate IP address
-        function isValidIP(ip) {
-            const ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
-            if (!ipRegex.test(ip)) return false;
-
-            const parts = ip.split('.');
-            return parts.every(part => {
-                const num = parseInt(part);
-                return num >= 0 && num <= 255;
-            });
-        }
-
-        // Get country info from IP
-        async function getCountryInfo(ip) {
-            try {
-                const response = await fetch(`https://api.iplocation.net/?ip=${ip}`);
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.log('Could not fetch country info');
-                return null;
-            }
-        }
-
-        // Ensure result stays visible
-        function ensureResultVisibility() {
-            const resultDiv = document.getElementById('result');
-            if (resultDiv && resultDiv.innerHTML) {
-                resultDiv.style.display = 'block';
-                resultDiv.style.opacity = '1';
-            }
-        }
-
-        // Create result HTML with country info
-        function createResultHTML(selectedCountry, endip, ipv6_1, ipv6_2, countryInfo) {
-            console.log('Creating result HTML with:', {selectedCountry, endip, ipv6_1, ipv6_2});
-            // Always include placeholder for country info
-            let countryInfoHTML = '<div class="country-info-placeholder"></div>';
-            if (countryInfo && countryInfo.country_name) {
-                countryInfoHTML = `
-                    <div class="result-item">
-                        <span class="result-label">
-                            <div class="icon-wrapper">
-                                <i data-lucide="map" style="width: 20px; height: 20px;"></i>
-                            </div>
-                            کشور واقعی IP
-                        </span>
-                        <div class="country-info">
-                            <span class="country-flag">${getCountryFlag(countryInfo.country_code2) || '🌍'}</span>
-                            <span>${countryInfo.country_name}</span>
-                            ${countryInfo.city ? `<span style="color: var(--text-secondary);">- ${countryInfo.city}</span>` : ''}
-                        </div>
-                    </div>
-                `;
-            }
-
-            return `
-                <div class="result-card">
-                    <h3 class="fw-bold mb-4 text-center" style="color: var(--text-primary);">
-                        <i data-lucide="check-circle" style="width: 24px; height: 24px; color: var(--success-color); margin-left: 8px;"></i>
-                        نتایج تولید شده
-                    </h3>
-
-                    <div class="result-item">
-                        <span class="result-label">
-                            <div class="icon-wrapper">
-                                <i data-lucide="flag" style="width: 20px; height: 20px;"></i>
-                            </div>
-                            کشور انتخابی
-                        </span>
-                        <div class="country-info">
-                            <span class="country-flag">${getCountryFlag(selectedCountry)}</span>
-                            <span>${countries[selectedCountry]}</span>
-                        </div>
-                    </div>
-
-                    ${countryInfoHTML}
-
-                    <div class="result-item">
-                        <span class="result-label">
-                            <div class="icon-wrapper">
-                                <i data-lucide="wifi" style="width: 20px; height: 20px;"></i>
-                            </div>
-                            IPv4
-                        </span>
-                        <span class="result-value">
-                            ${endip}
-                            <button class="copy-btn" onclick="copyToClipboard('${endip}')">
-                                <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
-                            </button>
-                        </span>
-                    </div>
-
-                    <div class="result-item">
-                        <span class="result-label">
-                            <div class="icon-wrapper">
-                                <i data-lucide="network" style="width: 20px; height: 20px;"></i>
-                            </div>
-                            IPv6 اول
-                        </span>
-                        <span class="result-value">
-                            ${ipv6_1}
-                            <button class="copy-btn" onclick="copyToClipboard('${ipv6_1}')">
-                                <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
-                            </button>
-                        </span>
-                    </div>
-
-                    <div class="result-item">
-                        <span class="result-label">
-                            <div class="icon-wrapper">
-                                <i data-lucide="globe-2" style="width: 20px; height: 20px;"></i>
-                            </div>
-                            IPv6 دوم
-                        </span>
-                        <span class="result-value">
-                            ${ipv6_2}
-                            <button class="copy-btn" onclick="copyToClipboard('${ipv6_2}')">
-                                <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
-                            </button>
-                        </span>
-                    </div>
-
-                    <div class="text-center mt-4">
-                        <div class="row g-2">
-                            <div class="col-sm-6">
-                                <button class="ios-button" onclick="generateNew()" style="width: 100%; padding: 14px 20px;">
-                                    <i data-lucide="refresh-cw" style="width: 18px; height: 18px; margin-left: 8px;"></i>
-                                    تولید مجدد
-                                </button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button class="ios-button secondary" onclick="testGeneratedIP('${endip}')" style="width: 100%; padding: 14px 20px;">
-                                    <i data-lucide="activity" style="width: 18px; height: 18px; margin-left: 8px;"></i>
-                                    تست این IP
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Tool functions
         function generateNew() {
             if (!isAuthenticated) return;
-            // Clear results only when starting new generation
             document.getElementById('result').innerHTML = '';
-            // Trigger new generation
             document.getElementById('generateBtn').click();
         }
 
-        function testGeneratedIP(ip) {
-            switchTab('test');
-            document.getElementById('pingInput').value = ip;
-            setTimeout(() => {
-                document.getElementById('pingBtn').click();
-            }, 300);
-        }
-
-        function exportResults() {
-            if (stats.generatedIPs.length === 0) {
-                showToast('هیچ نتیجه‌ای برای صادر کردن وجود ندارد!', 'error');
-                return;
-            }
-
-            const data = JSON.stringify(stats.generatedIPs, null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `dns-results-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-
-            URL.revokeObjectURL(url);
-            showToast('نتایج با موفقیت دانلود شد!', 'success');
-        }
-
-        function clearHistory() {
-            if (confirm('آیا مطمئن هستید که می‌خواهید تاریخچه را پاک کنید؟')) {
-                stats = {
-                    totalGenerated: 0,
-                    successfulPings: 0,
-                    countriesUsed: new Set(),
-                    generatedIPs: []
-                };
-                saveStats();
-                document.getElementById('result').innerHTML = '';
-                showToast('تاریخچه با موفقیت پاک شد!', 'success');
-            }
-        }
-
-        function randomCountry() {
-            const countryKeys = Object.keys(countries);
-            const randomKey = countryKeys[Math.floor(Math.random() * countryKeys.length)];
-            document.getElementById('countrySelect').value = randomKey;
-            showToast(`کشور ${countries[randomKey]} انتخاب شد!`, 'success');
-        }
-
-         function bulkGenerate() {
-             let count = document.getElementById('bulkCount').value;
-            if (!count || isNaN(count) || count < 1 || count > 10) {
-                showToast('تعداد نامعتبر است!', 'error');
-                return;
-            }
-
-            let results = '';
-            for (let i = 0; i < parseInt(count); i++) {
-                setTimeout(() => {
-                    randomCountry();
-                    setTimeout(() => {
-                        document.getElementById('generateBtn').click();
-                    }, 100);
-                }, i * 4000);
-            }
-        }
-
-        // Statistics management (simplified)
-
-        function saveStats() {
-            localStorage.setItem('dnsGeneratorStats', JSON.stringify({
-                ...stats,
-                countriesUsed: Array.from(stats.countriesUsed)
-            }));
-        }
-
-        function loadStats() {
-            const saved = localStorage.getItem('dnsGeneratorStats');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                stats = {
-                    ...parsed,
-                    countriesUsed: new Set(parsed.countriesUsed || [])
-                };
-            }
-        }
-
-        // Enhanced copy functionality
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
                 showToast('کپی شد!', 'success');
-
-                // Visual feedback
-                const button = event.target.closest('.copy-btn');
-                const originalBg = button.style.background;
-                button.style.background = 'var(--success-color)';
-                button.style.color = 'white';
-
-                setTimeout(() => {
-                    button.style.background = originalBg;
-                    button.style.color = 'var(--accent-color)';
-                }, 1000);
             }).catch(() => {
                 showToast('خطا در کپی کردن!', 'error');
             });
         }
 
-        // Enhanced toast notifications
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = 'position-fixed top-0 start-50 translate-middle-x mt-3';
             toast.style.zIndex = '9999';
-
-            const bgColor = type === 'success' ? 'var(--success-color)' : 
-                           type === 'error' ? 'var(--danger-color)' : 
-                           type === 'warning' ? 'var(--warning-color)' : 'var(--info-color)';
-            const icon = type === 'success' ? 'check-circle' : 
-                        type === 'error' ? 'x-circle' : 
-                        type === 'warning' ? 'alert-triangle' : 'info';
-
+            
+            const bgColor = type === 'success' ? 'var(--success-color)' : 'var(--danger-color)';
+            const icon = type === 'success' ? 'check-circle' : 'x-circle';
+            
             toast.innerHTML = `
-                <div class="alert fade show" role="alert" style="background: ${bgColor}; color: white; border: none; border-radius: 12px; padding: 12px 20px; display: flex; align-items: center; gap: 8px; animation: slideDown 0.3s ease;">
+                <div class="alert fade show" role="alert" style="background: ${bgColor}; color: white; border: none; border-radius: 12px; padding: 12px 20px; display: flex; align-items: center; gap: 8px;">
                     <i data-lucide="${icon}" style="width: 18px; height: 18px;"></i>
                     ${message}
                 </div>
             `;
             document.body.appendChild(toast);
             lucide.createIcons();
-
+            
             setTimeout(() => {
-                toast.style.animation = 'slideUp 0.3s ease forwards';
-                setTimeout(() => toast.remove(), 300);
+                toast.remove();
             }, 3000);
         }
 
-        // Utility functions
+        // Utility functions (from your original code)
         function generateRandomIP() {
             return `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
         }
@@ -1590,48 +760,37 @@
             parts.push(incrementedLastPart);
             return parts.join(':');
         }
-
+        
+        // تابع نمایش پرچم کشورها
         function getCountryFlag(countryCode) {
             const flagEmojis = {
-                'IR': '🇮🇷', 'DE': '🇩🇪', 'TR': '🇹🇷', 'GB': '🇬🇧', 'AE': '🇦🇪',
-                'CH': '🇨🇭', 'US': '🇺🇸', 'CA': '🇨🇦', 'BH': '🇧🇭', 'SA': '🇸🇦',
-                'AL': '🇦🇱', 'FI': '🇫🇮', 'RU': '🇷🇺', 'FR': '🇫🇷', 'NL': '🇳🇱',
-                'DZ': '🇩🇿', 'EG': '🇪🇬', 'BG': '🇧🇬', 'TJ': '🇹🇯', 'JP': '🇯🇵',
-                'KR': '🇰🇷', 'SG': '🇸🇬', 'AU': '🇦🇺', 'BR': '🇧🇷'
+                'IR': '🇮🇷',
+                'DE': '🇩🇪',
+                'TR': '🇹🇷',
+                'GB': '🇬🇧',
+                'AE': '🇦🇪',
+                'CH': '🇨🇭',
+                'US': '🇺🇸',
+                'CA': '🇨🇦',
+                'BH': '🇧🇭',
+                'SA': '🇸🇦',
+                'AL': '🇦🇱',
+                'FI': '🇫🇮',
+                'RU': '🇷🇺',
+                'FR': '🇫🇷',
+                'NL': '🇳🇱',
+                'DZ': '🇩🇿',
+                'EG': '🇪🇬',
+                'BG': '🇧🇬',
+                'TJ': '🇹🇯'
             };
-            return flagEmojis[countryCode] || '🌍';
+            
+            return flagEmojis[countryCode] || '';
         }
-
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideDown {
-                from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-                to { opacity: 1; transform: translateX(-50%) translateY(0); }
-            }
-            @keyframes slideUp {
-                from { opacity: 1; transform: translateX(-50%) translateY(0); }
-                to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-            }
-        `;
-        document.head.appendChild(style);
 
         // Initialize icons on page load
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
-            loadStats();
-            
-            // Periodic check to ensure results stay visible
-            setInterval(() => {
-                ensureResultVisibility();
-            }, 1000);
-        });
-
-        // Enter key for ping input
-        document.getElementById('pingInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('pingBtn').click();
-            }
         });
     </script>
 </body>
